@@ -1,0 +1,7 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+jdk-doxia
+jdk-doxia-sitetools
+jdk-enforcer
+jdk-maven-javadoc-plugin
+jdk-maven-site-plugin

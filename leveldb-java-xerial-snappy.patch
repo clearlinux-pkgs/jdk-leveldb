@@ -1,0 +1,89 @@
+diff --git a/leveldb/pom.xml b/leveldb/pom.xml
+index aaa4af7..446fba5 100644
+--- a/leveldb/pom.xml
++++ b/leveldb/pom.xml
+@@ -38,13 +38,6 @@
+         </dependency>
+ 
+         <dependency>
+-            <groupId>org.iq80.snappy</groupId>
+-            <artifactId>snappy</artifactId>
+-            <version>0.2</version>
+-            <optional>true</optional>
+-        </dependency>
+-
+-        <dependency>
+             <groupId>com.google.guava</groupId>
+             <artifactId>guava</artifactId>
+             <version>16.0.1</version>
+@@ -149,10 +142,6 @@
+                       <artifactId>leveldb-api</artifactId>
+                     </inclusion>
+                     <inclusion>
+-                      <groupId>org.iq80.snappy</groupId>
+-                      <artifactId>snappy</artifactId>
+-                    </inclusion> 
+-                    <inclusion>
+                       <groupId>com.google.guava</groupId>
+                       <artifactId>guava</artifactId>
+                     </inclusion> 
+@@ -168,15 +157,14 @@
+                   <option>-keep class com.google.common.collect.ImmutableList{*;}</option>
+                   <option>-keep class com.google.common.base.Preconditions{*;}</option>
+ 
+-                  <option>-keep class org.iq80.snappy.*{*;}</option>
+-                  <!-- <option>-keep class org.xerial.snappy.Snappy{*;}</option> -->
++<!--                  <option>-keep class org.iq80.snappy.*{*;}</option> -->
++                  <option>-keep class org.xerial.snappy.Snappy{*;}</option>
+                   <option>-dontnote com.google.common.cache.Striped64</option>
+                   <option>-dontnote com.google.common.cache.Striped64$*</option>
+                   <option>-dontnote com.google.common.util.concurrent.MoreExecutors</option>
+                   <option>-dontwarn com.google.common.collect.MinMaxPriorityQueue</option>
+                   <option>-dontwarn org.xerial.snappy.SnappyLoader</option>
+                   <option>-dontwarn org.xerial.snappy.SnappyBundleActivator</option>
+-                  <option>-dontwarn org.iq80.snappy.HadoopSnappyCodec**</option>
+                   <option>-dontoptimize</option>
+                 </options>
+               </configuration>
+diff --git a/leveldb/src/main/java/org/iq80/leveldb/util/Snappy.java b/leveldb/src/main/java/org/iq80/leveldb/util/Snappy.java
+index 05993fe..235399a 100644
+--- a/leveldb/src/main/java/org/iq80/leveldb/util/Snappy.java
++++ b/leveldb/src/main/java/org/iq80/leveldb/util/Snappy.java
+@@ -92,12 +92,12 @@ public class Snappy {
+                 output = uncompressed.array();
+                 outputOffset = uncompressed.arrayOffset() + uncompressed.position();
+             } else {
+-                int t = org.iq80.snappy.Snappy.getUncompressedLength(input, inputOffset);
++                int t = org.xerial.snappy.Snappy.uncompressedLength(input, inputOffset, input.length);
+                 output = new byte[t];
+                 outputOffset = 0;
+             }
+ 
+-            int count = org.iq80.snappy.Snappy.uncompress(input, inputOffset, length, output, outputOffset);
++            int count = org.xerial.snappy.Snappy.uncompress(input, inputOffset, length, output, outputOffset);
+             if( uncompressed.hasArray() ) {
+                 uncompressed.limit(uncompressed.position()+count);
+             } else {
+@@ -110,11 +110,11 @@ public class Snappy {
+         }
+ 
+         public int uncompress(byte[] input, int inputOffset, int length, byte[] output, int outputOffset) throws IOException {
+-            return  org.iq80.snappy.Snappy.uncompress(input, inputOffset, length, output, outputOffset);
++            return  org.xerial.snappy.Snappy.uncompress(input, inputOffset, length, output, outputOffset);
+         }
+ 
+         public int compress(byte[] input, int inputOffset, int length, byte[] output, int outputOffset) throws IOException {
+-            return org.iq80.snappy.Snappy.compress(input, inputOffset, length, output, outputOffset);
++            return org.xerial.snappy.Snappy.compress(input, inputOffset, length, output, outputOffset);
+         }
+ 
+         public byte[] compress(String text) throws IOException {
+@@ -127,7 +127,7 @@ public class Snappy {
+         }
+ 
+         public int maxCompressedLength(int length) {
+-            return org.iq80.snappy.Snappy.maxCompressedLength(length);
++            return org.xerial.snappy.Snappy.maxCompressedLength(length);
+         }
+     }
+ 

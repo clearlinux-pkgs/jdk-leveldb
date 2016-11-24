@@ -1,0 +1,16 @@
+# unavailable plugins
+python3 /usr/share/java-utils/pom_editor.py pom_remove_plugin  :findbugs-maven-plugin
+python3 /usr/share/java-utils/pom_editor.py pom_remove_plugin  :proguard-maven-plugin leveldb
+
+# only needed for ProGuard
+python3 /usr/share/java-utils/pom_editor.py pom_remove_dep com.google.code.findbugs:jsr305 leveldb
+
+# Unwanted
+python3 /usr/share/java-utils/pom_editor.py pom_remove_plugin  :maven-source-plugin
+python3 /usr/share/java-utils/pom_editor.py pom_remove_plugin  :maven-shade-plugin leveldb
+
+# remove unavailable com.google.doclava doclava 1.0.3
+python3 /usr/share/java-utils/pom_editor.py pom_remove_plugin  :maven-javadoc-plugin
+
+python3 /usr/share/java-utils/pom_editor.py pom_remove_dep org.fusesource.leveldbjni:leveldbjni-all leveldb
+rm -r leveldb/src/test/java/org/iq80/leveldb/impl/NativeInteropTest.java
