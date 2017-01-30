@@ -4,7 +4,7 @@
 #
 Name     : jdk-leveldb
 Version  : 0.7
-Release  : 1
+Release  : 2
 URL      : https://github.com/dain/leveldb/archive/0.7.tar.gz
 Source0  : https://github.com/dain/leveldb/archive/0.7.tar.gz
 Summary  : No detailed summary available
@@ -16,6 +16,7 @@ BuildRequires : apache-maven2
 BuildRequires : javapackages-tools
 BuildRequires : jdk-aether
 BuildRequires : jdk-aopalliance
+BuildRequires : jdk-apache-parent
 BuildRequires : jdk-atinject
 BuildRequires : jdk-bsh
 BuildRequires : jdk-cdi-api
@@ -27,6 +28,7 @@ BuildRequires : jdk-commons-io
 BuildRequires : jdk-commons-lang
 BuildRequires : jdk-commons-lang3
 BuildRequires : jdk-commons-logging
+BuildRequires : jdk-commons-parent
 BuildRequires : jdk-doxia
 BuildRequires : jdk-doxia-integration-tools
 BuildRequires : jdk-doxia-sitetools
